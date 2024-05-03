@@ -215,7 +215,7 @@
                 label="Summit"
                 :trailing="false"
                 class="w-44 justify-center"
-                @click="navigateTo('STATION MANAGEMENT')"
+                @click="navigateTo('/station-management')"
             />
         </div>
 
@@ -228,7 +228,7 @@
                 :trailing="false"
                 color="grey"
                 class="ml-10 bg-gray-500 hover:bg-gray-600 w-44 justify-center"
-                @click="navigateTo('STATION MANAGEMENT')"
+                @click="navigateTo('/station-management')"
             />
         </div>
     </div>
