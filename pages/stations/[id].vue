@@ -220,17 +220,14 @@ import DatePicker from "/components/Datepicker.vue";
 const date = ref(new Date());
 const date2 = ref(new Date());
 const date3 = ref(new Date());
-const router = useRouter();
+const route = useRoute();
 const product = ref<any>(null);
 
 const fetchProductData = async () => {
     try {
-        const productId =
-            typeof router.currentRoute.value.params.product === "string"
-                ? router.currentRoute.value.params.product
-                : "";
+       
         const response = await axios.get(
-            `https://fakestoreapi.com/products/${productId}`
+            `https://fakestoreapi.com/products/${route.params.id}`
         );
         product.value = response.data;
     } catch (error) {
