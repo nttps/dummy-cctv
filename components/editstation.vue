@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-left text-black text-xl ml-52 mt-5">
-        <UButton color="blue" size="xl" variant="solid" @click="navigateTo('CreateCCTV')">Add Station</UButton>
+        <UButton color="blue" size="xl" variant="solid" @click="navigateTo('/cctv/create')">Add Station</UButton>
         
       </div>
       <div class="flex items-center gap-1.5 ml-52 mt-2">
@@ -107,11 +107,6 @@
       </div>
 </template>
 
-
-
-
-
-
 <script lang="ts" setup>
 const columns = [{
   key: 'id',
@@ -143,29 +138,6 @@ const columns = [{
 const selectedColumns = ref(columns)
 const columnsTable = computed(() => columns.filter((column) => selectedColumns.value.includes(column)))
 
-
-
-const actions = [
-  [{
-    key: 'completed',
-    label: 'Completed',
-    icon: 'i-heroicons-check'
-  }], [{
-    key: 'uncompleted',
-    label: 'In Progress',
-    icon: 'i-heroicons-arrow-path'
-  }]
-]
-
-const todoStatus = [{
-  key: 'uncompleted',
-  label: 'In Progress',
-  value: false
-}, {
-  key: 'completed',
-  label: 'Completed',
-  value: true
-}]
 
 const search = ref('')
 const selectedStatus = ref([])
@@ -210,15 +182,6 @@ const { data: todos, pending } = await useLazyAsyncData<{
   watch: [page, search, searchStatus, pageCount, sort]
 })
 
-const router = useRouter()
-
-function navigateTo(page: string) {
-  switch (page) {
-    case 'CreateCCTV':
-      router.push({ name: 'CreateCCTV' }) 
-      break
-  }  
-}
 
 
 </script>
