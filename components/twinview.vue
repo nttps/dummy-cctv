@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import store from '@/store'
+import store from '~/stores'
 const isWarRoomPage = ref(false)
 const isAddClicked = ref(false)
 const router = useRouter()

@@ -98,7 +98,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import store from '@/store'
+import store from '~/stores'
 const route = useRoute()
 const router = useRouter()
 const isWarRoomPage = ref(false)

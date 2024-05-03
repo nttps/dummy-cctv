@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-left text-black text-xl ml-52 mt-5">
-          <UButton color="sky" size="xl" variant="solid" @click="navigateTo('CreateUser')">Add User</UButton>
+          <UButton color="sky" size="xl" variant="solid" @click="navigateTo('/users/create')">Add User</UButton>
         </div>
 
         <span class="flex items-center  gap-3  px-4 py-3 ml-[230px] text-black">Username

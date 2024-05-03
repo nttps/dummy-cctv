@@ -97,7 +97,7 @@ export default {
   methods: {
     goTostationdetail() {
       console.log('Go to station detail clicked');
-       this.$router.push({ name: 'stationdetail' }); // ถ้าใช้ Vue Router
+       navigateTo('/stations/view')
     }
   }
 };
