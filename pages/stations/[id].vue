@@ -9,45 +9,45 @@
                 &nbsp;&nbsp;==========================================
             </div>
         </div>
-
-        <div class="flex justify-center">
-            <div
-                class="border-2 bg-white border-black p-1 w-5/12 rounded-xl h-10 mt-10"
+        <div class=" flex justify-center">
+        <div
+                class="border-2 bg-white border-black p-1 w-[1300px] h-[150px] rounded-xl  mt-10"
             >
-                <p class="text-black font-bold text-xl text-center">
+                <p class="text-black font-bold text-4xl text-center">
                     Station Name
                 </p>
-                <div class="mt-10">
-                    {{ product ? product.id : "Loading..." }}
+                <div class="flex justify-center mt-10 text-black text-xl">
+                    <p>1 - สะพานปทุมธานี 1</p>
+
                 </div>
-                <div
-                    class="border-2 bg-white border-black p-5 w-12/12 rounded-xl mt-10"
-                >
-                    <p class="text-black font-bold text-xl text-center">
+            </div> 
+        </div>
+        <div class="flex justify-center">
+            
+            <div class="border-2 bg-white border-black p-5 w-[500px] h-[300px]  rounded-xl mt-10">
+                    <p class="text-black font-bold text-4xl text-center">
                         Address
                     </p>
-                    <div class="mt-10"></div>
+                    <div class="mt-10 text-black ">
+                        <p><span class="text-black font-semibold  text-xl">ระดับน้ำ :</span> -</p>
+                        <p><span class="text-black font-semibold  text-xl">ที่ตั้ง :</span> ถนน รังสิต-ปทุมธานี ตำบล บางปรอก อำเภอ เมืองปทุมธานี จังหวัด ปทุมธานี 12000</p> 
+                        <p><span class="text-black font-semibold  text-xl">ละติจูด :</span> 14.026473979411982</p> 
+                        <p><span class="text-black font-semibold  text-xl">ลองจิจูด :</span> 100.53880218352005</p> 
+                        <p><span class="text-black font-semibold  text-xl">สถานะ :</span> ออนไลน์</p> 
+                    </div>
                 </div>
-            </div>
-
-            <div
-                class="border-2 bg-white border-black p-5 w-5/12 rounded-xl h-[400px] ml-10 mt-10"
-            >
+            <div class="border-2 bg-white border-black p-5  rounded-xl  ml-10 mt-10 max-w-min max-h-min">
                 <div class="mt-10">
-                    <img
-                        v-if="product && product.image"
-                        :src="product.image"
-                        :alt="product.title"
-                        class="w-full h-full object-cover"
-                    />
+                        <div class="flex justify-center mb-10">
+                            <video ref="videoPlayer" src="~assets/gauage.mp4" autoplay muted>
+                            </video>
+                        </div>
                     <p class="text-black font-bold text-xl text-left">
                         Play back
                     </p>
                     <p class="text-black text-xl mt-2">
                         Date
-                        <span class="text-black text-xl text-center ml-[90px]"
-                            >Time</span
-                        >
+                        <span class="text-black text-xl text-center ml-[90px]">Time</span >
                     </p>
                     <div class="flex container">
                         <UPopover :popper="{ placement: 'bottom-start' }">
@@ -90,13 +90,7 @@
                             Search
                         </button>
                     </div>
-                    <div class="mt-10">
-                        <img
-                            v-if="product && product.image"
-                            :src="product.image"
-                            :alt="product.title"
-                            class="w-full h-full object-cover"
-                        />
+                    <div class="mt-5">
                         <p class="text-black font-bold text-xl text-left">
                             Save
                         </p>
@@ -149,12 +143,6 @@
                         </div>
                     </div>
                     <div class="mt-5">
-                        <img
-                            v-if="product && product.image"
-                            :src="product.image"
-                            :alt="product.title"
-                            class="w-full h-full object-cover"
-                        />
                         <p class="text-black font-bold text-xl text-left"></p>
                         <p class="text-black text-xl mt-2">
                             To
@@ -214,13 +202,23 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';   
+const videoPlayer = ref<HTMLVideoElement | null>(null);
+
+onMounted(() => {
+  if (videoPlayer.value) {
+    videoPlayer.value.play();
+  }
+});
 import axios from "axios";
 import { format } from "date-fns";
 const date = ref(new Date());
 const date2 = ref(new Date());
 const date3 = ref(new Date());
 const route = useRoute();
-const product = ref<any>(null);
+const product = ref<any>({
+    videoUrl: "https://www.youtube.com/embed/Qu8bDQjuN64", 
+});
 
 const fetchProductData = async () => {
     try {

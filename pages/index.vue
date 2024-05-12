@@ -1,7 +1,9 @@
 <template>
     <div>
-        <ArcGISMap />
+        <leaflet /> 
+         
     </div>
+    
 </template>
 
 <script setup lang="ts">
