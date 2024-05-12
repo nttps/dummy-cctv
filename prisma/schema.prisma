@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cctvStation {
+  id           Int              @id @default(autoincrement())
+  createBy     String           @default("")
+  createdAt    DateTime         @default(now())
+  updateBy     String
+  updatedAt    DateTime         @updatedAt
+  name         String 
+  layoutWarroom warRoomLayout[]
+
+  @@map("cctv_stations")
+}
+
+model warRoom {
+  id           Int              @id @default(autoincrement())
+  createBy     String           @default("")
+  createdAt    DateTime         @default(now())
+  updateBy     String
+  updatedAt    DateTime         @updatedAt
+  name         String 
+
+  @@map("war_rooms")
+}
+
+model warRoomLayout {
+  id           Int              @id @default(autoincrement())
+  stationId    Int
+  station      cctvStation      @relation(fields: [stationId], references: [id])
+
+  @@map("war_room_layouts")
+}
