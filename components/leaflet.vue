@@ -90,7 +90,7 @@ onMounted(() => {
         // .map is instance of Leaflet map
 
         L.popup()
-            .setLatLng([50.4, 14.3])
+            .setLatLng([13.736717, 100.523186])
             .setContent('Hello World')
             .openOn(map);
     });
