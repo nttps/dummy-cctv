@@ -20,9 +20,24 @@ model cctvStation {
   updateBy     String
   updatedAt    DateTime         @updatedAt
   name         String 
+  latitude     Float 
+  longitude    Float 
+  status       String
+
+  histories cctvHistory[]
+
   layoutWarroom warRoomLayout[]
 
   @@map("cctv_stations")
+}
+
+model cctvHistory {
+  id           Int              @id @default(autoincrement())
+  createAt     DateTime         @default(now())
+  waterLevel   WaterLevel       @default(LOW)       
+  stationId    Int
+  station      cctvStation      @relation(fields: [stationId], references: [id])
+
 }
 
 model warRoom {
@@ -42,4 +57,10 @@ model warRoomLayout {
   station      cctvStation      @relation(fields: [stationId], references: [id])
 
   @@map("war_room_layouts")
+}
+
+enum WaterLevel {
+  HIGH
+  MEDUIM
+  LOW
 }
