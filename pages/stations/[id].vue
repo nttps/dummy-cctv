@@ -17,8 +17,7 @@
                     Station Name
                 </p>
                 <div class="flex justify-center mt-10 text-black text-xl">
-                    <p>1 - สะพานปทุมธานี 1</p>
-
+                    <p>{{ station.code }} - {{ station.name }}</p>
                 </div>
             </div> 
         </div>
@@ -30,17 +29,16 @@
                     </p>
                     <div class="mt-10 text-black ">
                         <p><span class="text-black font-semibold  text-xl">ระดับน้ำ :</span> -</p>
-                        <p><span class="text-black font-semibold  text-xl">ที่ตั้ง :</span> ถนน รังสิต-ปทุมธานี ตำบล บางปรอก อำเภอ เมืองปทุมธานี จังหวัด ปทุมธานี 12000</p> 
-                        <p><span class="text-black font-semibold  text-xl">ละติจูด :</span> 14.026473979411982</p> 
-                        <p><span class="text-black font-semibold  text-xl">ลองจิจูด :</span> 100.53880218352005</p> 
-                        <p><span class="text-black font-semibold  text-xl">สถานะ :</span> ออนไลน์</p> 
+                        <p><span class="text-black font-semibold  text-xl">ที่ตั้ง :</span> {{ station.location }}</p> 
+                        <p><span class="text-black font-semibold  text-xl">ละติจูด :</span> {{ station.latitude }}</p> 
+                        <p><span class="text-black font-semibold  text-xl">ลองจิจูด :</span> {{ station.longitude }}</p> 
+                        <p><span class="text-black font-semibold  text-xl">สถานะ :</span> {{ station.status ? 'ออนไลน์' : 'ออฟไลน์' }}</p> 
                     </div>
                 </div>
             <div class="border-2 bg-white border-black p-5  rounded-xl  ml-10 mt-10 max-w-min max-h-min">
                 <div class="mt-10">
                         <div class="flex justify-center mb-10">
-                            <video ref="videoPlayer" src="~assets/gauage.mp4" autoplay muted>
-                            </video>
+                            <video ref="videoPlayer" src="~assets/gauage.mp4" autoplay muted />
                         </div>
                     <p class="text-black font-bold text-xl text-left">
                         Play back
@@ -202,7 +200,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';   
 const videoPlayer = ref<HTMLVideoElement | null>(null);
 
 onMounted(() => {
@@ -210,30 +207,26 @@ onMounted(() => {
     videoPlayer.value.play();
   }
 });
-import axios from "axios";
 import { format } from "date-fns";
 const date = ref(new Date());
 const date2 = ref(new Date());
 const date3 = ref(new Date());
 const route = useRoute();
-const product = ref<any>({
+const station = ref<any>({
     videoUrl: "https://www.youtube.com/embed/Qu8bDQjuN64", 
 });
 
-const fetchProductData = async () => {
+const fetchStationData = async () => {
     try {
-       
-        const response = await axios.get(
-            `https://fakestoreapi.com/products/${route.params.id}`
-        );
-        product.value = response.data;
+        const response = await $fetch(`/api/v1/stations/${route.params.id}`);
+        station.value = response;
     } catch (error) {
-        console.error("Error fetching product data:", error);
+        console.error("Error fetching station data:", error);
     }
 };
 
 onMounted(() => {
-    fetchProductData();
+    fetchStationData();
 });
 
 </script>

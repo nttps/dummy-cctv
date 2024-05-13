@@ -1,5 +1,14 @@
-export default defineEventHandler(async (event) => {
-    const req = await readBody(event);
+import { PrismaClient } from "@prisma/client";
+import { pagination } from "~/utils/crud";
 
-    console.log(req);
+const prisma = new PrismaClient();
+
+export default defineEventHandler(async (event) => {
+    const query = getQuery(event);
+    const params = {
+    };
+
+    const include = {
+    };
+    return await pagination(prisma.cctvStation, event, params, include);
 });

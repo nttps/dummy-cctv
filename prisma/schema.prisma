@@ -15,17 +15,18 @@ datasource db {
 
 model cctvStation {
   id           Int              @id @default(autoincrement())
+  code         Int              @unique
   createBy     String           @default("")
   createdAt    DateTime         @default(now())
   updateBy     String
   updatedAt    DateTime         @updatedAt
   name         String 
+  location     String           @db.Text
   latitude     Float 
   longitude    Float 
-  status       String
+  status       Boolean          
 
   histories cctvHistory[]
-
   layoutWarroom warRoomLayout[]
 
   @@map("cctv_stations")
@@ -37,6 +38,8 @@ model cctvHistory {
   waterLevel   WaterLevel       @default(LOW)       
   stationId    Int
   station      cctvStation      @relation(fields: [stationId], references: [id])
+
+  @@map("cctv_histories")
 
 }
 
