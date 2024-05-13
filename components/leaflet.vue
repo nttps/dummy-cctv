@@ -96,7 +96,7 @@ onMounted(() => {
 
 #windy {
     width: 100%;
-    height: 300px;
+    height: 650px;
 }
 
 .map-container {
