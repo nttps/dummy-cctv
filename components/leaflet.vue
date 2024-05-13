@@ -42,12 +42,8 @@
 </template>
 
 <script setup>
-
-
-
 onMounted(() => {
     fetchMap();
-    console.log(L)
 });
 
 const stations = ref([]);
