@@ -8,6 +8,13 @@
 
 <script setup lang="ts">
 
+useHead({
+    script: [{ 
+        src: 'https://unpkg.com/leaflet@1.4.0/dist/leaflet.js'
+    },{
+        src: 'https://api.windy.com/assets/map-forecast/libBoot.js'
+    }]
+})
 
 </script>
 
