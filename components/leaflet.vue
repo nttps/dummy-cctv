@@ -79,7 +79,7 @@ onMounted(() => {
         // windyAPI is ready, and contain 'map', 'store',
         // 'picker' and other usefull stuff
 
-        const { map, picker, utils, broadcast, store  } = windyAPI;
+        const { map } = windyAPI;
         // .map is instance of Leaflet map
 
 
@@ -140,20 +140,6 @@ onMounted(() => {
         map.on('zoom', updateIconStyle);
         map.on('zoomend', updateIconStyle);
         map.on('viewreset', updateIconStyle);
-
-        picker.on('pickerOpened', ({ lat, lon, values, overlay }) => {
-            // -> 48.4, 14.3, [ U,V, ], 'wind'
-            console.log('opened', lat, lon, values, overlay);
-
-            const windObject = utils.wind2obj(values);
-            console.log(windObject);
-        });
-        store.on('pickerLocation', ({ lat, lon }) => {
-            console.log(lat, lon);
-
-            const { values, overlay } = picker.getParams();
-            console.log('location changed', lat, lon, values, overlay);
-        });
 
         
 
