@@ -75,7 +75,7 @@ onMounted(() => {
         key: 'hsnpVb7cJX8ATE1JRWTOSvbYUi4ErDT3', // REPLACE WITH YOUR KEY !!!
 
         // Put additional console output
-        verbose: true,
+        //verbose: true,
 
         // Optional: Initial state of the map
         lat: 13.736717,
@@ -87,63 +87,7 @@ onMounted(() => {
     }
     
     // Initialize Windy API
-    windyInit(options, windyAPI => {
-        // windyAPI is ready, and contain 'map', 'store',
-        // 'picker' and other usefull stuff
-
-        const { map, picker, utils, broadcast, store  } = windyAPI;
-        // .map is instance of Leaflet map
-
-        const levels = store.getAllowed('availLevels');
-
-        let i = 0;
-        setInterval(() => {
-            i = i === levels.length - 1 ? 0 : i + 1;
-
-            // Changing Windy params at runtime
-            store.set('level', levels[i]);
-        }, 500);
-
-        // Observing change of .store value
-        store.on('level', level => {
-            console.log(`Level was changed: ${level}`);
-        });
-
-        picker.on('pickerOpened', ({ lat, lon, values, overlay }) => {
-            // -> 48.4, 14.3, [ U,V, ], 'wind'
-            console.log('opened', lat, lon, values, overlay);
-
-            const windObject = utils.wind2obj(values);
-            console.log(windObject);
-        });
-
-        picker.on('pickerMoved', ({ lat, lon, values, overlay }) => {
-            // picker was dragged by user to latLon coords
-            console.log('moved', lat, lon, values, overlay);
-        });
-
-        picker.on('pickerClosed', () => {
-            // picker was closed
-        });
-
-        store.on('pickerLocation', ({ lat, lon }) => {
-            console.log(lat, lon);
-
-            const { values, overlay } = picker.getParams();
-            console.log('location changed', lat, lon, values, overlay);
-        });
-
-        // Wait since wather is rendered
-        broadcast.once('redrawFinished', () => {
-            // Opening of a picker (async)
-            picker.open({ lat: 13.736717, lon: 100.523186 });
-        });
-
-        L.popup()
-            .setLatLng([13.736717, 100.523186])
-            .setContent('Hello World')
-            .openOn(map);
-    });
+    windyInit(options, () => {});
 })
 
 </script>
