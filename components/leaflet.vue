@@ -1,10 +1,10 @@
 <template>
-    <div class="map-container">
+    <!-- <div class="map-container">
         <LMap
             ref="map"
             :zoom="zoom"
             :center="center"
-            @mounted="handleMapMounted"
+            @ready="mapInitialized"
         >
             <LTileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -18,7 +18,6 @@
             <LMarker :lat-lng="[station.latitude, station.longitude]" v-for="station in stations">
                 <l-icon
                     :icon-size="dynamicSize"
-                    :icon-anchor="dynamicAnchor"
                     icon-url="https://i.ibb.co/sQxTX9w/cctv-camera.png"
                 />
                 <LPopup class="font-bold">
@@ -35,12 +34,25 @@
                 </LPopup>
             </LMarker>
         </LMap>
-    </div>
+    </div> -->
+
+    <div id="windy"></div>
 </template>
 
 <script setup>
+
+
+useHead({
+    script: [{ 
+        src: 'https://unpkg.com/leaflet@1.4.0/dist/leaflet.js'
+    },{
+        src: 'https://api.windy.com/assets/map-forecast/libBoot.js'
+    }]
+})
+
 onMounted(() => {
     fetchMap();
+    console.log(L)
 });
 
 const stations = ref([]);
@@ -52,9 +64,47 @@ const fetchMap = async () => {
 const zoom = ref(9);
 const center = ref([13.736717, 100.523186]);
 const dynamicSize = [38, 38];
+
+
+onMounted(() => {
+
+    const options = {
+        // Required: API key
+        key: 'hsnpVb7cJX8ATE1JRWTOSvbYUi4ErDT3', // REPLACE WITH YOUR KEY !!!
+
+        // Put additional console output
+        verbose: true,
+
+        // Optional: Initial state of the map
+        lat: 13.736717,
+        lon: 100.523186,
+        zoom: 9,
+    }
+    
+    // Initialize Windy API
+    windyInit(options, windyAPI => {
+        // windyAPI is ready, and contain 'map', 'store',
+        // 'picker' and other usefull stuff
+
+        const { map } = windyAPI;
+        // .map is instance of Leaflet map
+
+        L.popup()
+            .setLatLng([50.4, 14.3])
+            .setContent('Hello World')
+            .openOn(map);
+    });
+})
+
 </script>
 
 <style scoped>
+
+#windy {
+    width: 100%;
+    height: 300px;
+}
+
 .map-container {
     display: flex;
     justify-content: center;
