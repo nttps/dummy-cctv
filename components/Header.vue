@@ -109,12 +109,13 @@
     </div>
     <div class="menu flex items-center bg-black text-white py-3">
         <div class="menu-items flex mr-auto">
-            <div
+            <NuxtLink
                 class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
-                @click="navigateTo('/')"
+                to="/"
+                external
             >
                 HOME
-            </div>
+            </NuxtLink>
             <div
                 class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
                 @click="navigateTo('/stations')"
