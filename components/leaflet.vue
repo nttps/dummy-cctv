@@ -141,31 +141,6 @@ onMounted(() => {
         map.on('zoomend', updateIconStyle);
         map.on('viewreset', updateIconStyle);
 
-         // Change overlays programatically
-        const overlays = ['rain', 'wind', 'temp', 'clouds'];
-        let iOver = 0;
-
-        setInterval(() => {
-            iOver = iOver === 3 ? 0 : iOver + 1;
-            store.set('overlay', overlays[iOver]);
-        }, 800);
-
-
-        const levels = store.getAllowed('availLevels');
-
-        let i = 0;
-        setInterval(() => {
-            i = i === levels.length - 1 ? 0 : i + 1;
-
-            // Changing Windy params at runtime
-            store.set('level', levels[i]);
-        }, 500);
-
-        // Observing change of .store value
-        store.on('level', level => {
-            console.log(`Level was changed: ${level}`);
-        });
-
         picker.on('pickerOpened', ({ lat, lon, values, overlay }) => {
             // -> 48.4, 14.3, [ U,V, ], 'wind'
             console.log('opened', lat, lon, values, overlay);
@@ -173,27 +148,11 @@ onMounted(() => {
             const windObject = utils.wind2obj(values);
             console.log(windObject);
         });
-
-        picker.on('pickerMoved', ({ lat, lon, values, overlay }) => {
-            // picker was dragged by user to latLon coords
-            console.log('moved', lat, lon, values, overlay);
-        });
-
-        picker.on('pickerClosed', () => {
-            // picker was closed
-        });
-
         store.on('pickerLocation', ({ lat, lon }) => {
             console.log(lat, lon);
 
             const { values, overlay } = picker.getParams();
             console.log('location changed', lat, lon, values, overlay);
-        });
-
-        // Wait since wather is rendered
-        broadcast.once('redrawFinished', () => {
-            // Opening of a picker (async)
-            picker.open({ lat: 13.736717, lon: 100.523186 });
         });
 
         
