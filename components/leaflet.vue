@@ -124,7 +124,7 @@ onMounted(() => {
                         }).addTo(map);
 
                         markers.push(marker);
-                        marker._icon.setAttribute('data-heading', boat.heading);
+                        marker._icon.setAttribute('data-heading', station.name);
                         marker.bindPopup(station);
 
                         updateIconStyle();
