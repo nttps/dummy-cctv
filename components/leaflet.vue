@@ -43,7 +43,6 @@
 
 <script setup>
 onMounted(() => {
-    fetchMap();
 });
 
 const stations = ref([]);
@@ -83,6 +82,65 @@ onMounted(() => {
         const { map, picker, utils, broadcast, store  } = windyAPI;
         // .map is instance of Leaflet map
 
+
+        const MARKER_ICON_URL = 'https://i.ibb.co/sQxTX9w/cctv-camera.png'
+
+        const CameraIcon = L.icon({
+            iconUrl: MARKER_ICON_URL,
+            iconSize: dynamicSize,
+            iconAnchor: [12, 12],
+            popupAnchor: [0, 0],
+        });
+
+
+        const markers = [];
+
+        const updateIconStyle = () => {
+            for (const marker of markers) {
+                const icon = marker._icon;
+                if (!icon) {
+                    continue;
+                }
+                const heading = icon.getAttribute('data-heading');
+                if (icon.style.transform.indexOf('rotateZ') === -1) {
+                    icon.style.transform = `${
+                        icon.style.transform
+                    } rotateZ(${heading || 0}deg)`;
+                    icon.style.transformOrigin = 'center';
+                }
+            }
+        };
+
+        $fetch('/api/v1/stations')
+            .then(response => response.json())
+            .then(result => result.result)
+            .then(result => {
+                try {
+                    let hue = 0;
+                    for (const station of result) {
+                        hue = (hue + 60) % 360;
+                        const marker = L.marker([station.latitude, station.longitude], {
+                            icon: CameraIcon,
+                        }).addTo(map);
+
+                        markers.push(marker);
+                        marker._icon.setAttribute('data-heading', boat.heading);
+                        marker.bindPopup(station);
+
+                        updateIconStyle();
+                    }
+                } catch (error) {
+                    console.error(`Error querying boats: ${error.message}`);
+                }
+            })
+            .catch(error => {
+                console.error(`Error querying boats: ${error.message}`);
+            });
+
+        map.on('zoom', updateIconStyle);
+        map.on('zoomend', updateIconStyle);
+        map.on('viewreset', updateIconStyle);
+
          // Change overlays programatically
         const overlays = ['rain', 'wind', 'temp', 'clouds'];
         let iOver = 0;
@@ -91,7 +149,6 @@ onMounted(() => {
             iOver = iOver === 3 ? 0 : iOver + 1;
             store.set('overlay', overlays[iOver]);
         }, 800);
-
 
 
         const levels = store.getAllowed('availLevels');
