@@ -112,7 +112,6 @@
             <NuxtLink
                 class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
                 to="/"
-                external
             >
                 HOME
             </NuxtLink>

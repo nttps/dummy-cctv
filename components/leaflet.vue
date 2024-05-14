@@ -42,127 +42,87 @@
 </template>
 
 <script setup>
-
-
 useHead({
-    script: [{ 
-        src: 'https://unpkg.com/leaflet@1.4.0/dist/leaflet.js'
-    },{
-        src: 'https://api.windy.com/assets/map-forecast/libBoot.js'
-    }]
+    script: []
 })
 
-const zoom = ref(9);
 const dynamicSize = [38, 38];
-    const mainMap = ref()
-
 onMounted(() => {
     fetchMap()
     initMap()
 })
 
-onUnmounted(() => {
-
-})
 const stations = ref([]);
 const fetchMap = async () => {
     const data = await $fetch("/api/v1/stations");
-
     stations.value = data.data;
 };
 
+const initMap = async () => {
 
-const initMap = () => {
-     const options = {
-        // Required: API key
-        key: 'hsnpVb7cJX8ATE1JRWTOSvbYUi4ErDT3', // REPLACE WITH YOUR KEY !!!
+    await loadWindyAPI();
+    const windyAPI = getWindyAPI();
+    const { map } = windyAPI;
 
-        // Put additional console output
-        //verbose: true,
+    const MARKER_ICON_URL = 'https://i.ibb.co/sQxTX9w/cctv-camera.png'
 
-        // Optional: Initial state of the map
-        lat: 13.736717,
-        lon: 100.523186,
-        zoom: zoom.value,
-        timestamp: Date.now() + 3 * 24 * 60 * 60 * 1000,
-
-        hourFormat: '12h',
-    }
-
-    
-    // Initialize Windy API
-    windyInit(options , async (windyAPI) => {
-        // windyAPI is ready, and contain 'map', 'store',
-        // 'picker' and other usefull stuff
-
-        const { map } = windyAPI;
-
-        mainMap.value = map
-        // .map is instance of Leaflet map
-
-
-        const MARKER_ICON_URL = 'https://i.ibb.co/sQxTX9w/cctv-camera.png'
-
-        const CameraIcon = L.icon({
-            iconUrl: MARKER_ICON_URL,
-            iconSize: dynamicSize,
-            iconAnchor: [12, 12],
-            popupAnchor: [0, 0],
-        });
-
-
-        const markers = [];
-
-        const updateIconStyle = () => {
-            for (const marker of markers) {
-                const icon = marker._icon;
-                if (!icon) {
-                    continue;
-                }
-                const heading = icon.getAttribute('data-heading');
-                if (icon.style.transform.indexOf('rotateZ') === -1) {
-                    icon.style.transform = `${
-                        icon.style.transform
-                    } rotateZ(${heading || 0}deg)`;
-                    icon.style.transformOrigin = 'center';
-                }
-            }
-        };
-
-        try {
-            let hue = 0;
-            for (const station of stations.value) {
-                hue = (hue + 60) % 360;
-                const marker = L.marker([station.latitude, station.longitude], {
-                    icon: CameraIcon,
-                }).addTo(map);
-
-                markers.push(marker);
-                marker._icon.setAttribute('data-heading', station.name);
-                marker.bindPopup(`<div  class="font-bold flex flex-col">
-                        <p class="!m-0 !mb-2">${station.code} - ${station.name}</p>
-                        <p class="!m-0 !mb-2">
-                            ที่ตั้ง: ${station.location }
-                        </p>
-                        <p class="!m-0">ละติจูด: ${ station.latitude }</p>
-                        <p class="!m-0">ลองจิจูด: ${ station.longitude }</p>
-                        <p class="!m-0 !mb-2">สถานะ: ${ station.status ? 'ออนไลน์' : 'ออฟไลน์' }</p>
-                        <a class="self-center" href="stations/${station.code}" color="white">View</a>
-                    </div>
-                `)
-
-                updateIconStyle();
-            }
-        } catch (error) {
-            console.error(`Error querying boats: ${error.message}`);
-        }
-        map.on('zoom', updateIconStyle);
-        map.on('zoomend', updateIconStyle);
-        map.on('viewreset', updateIconStyle);
-
-        
-
+    const CameraIcon = L.icon({
+        iconUrl: MARKER_ICON_URL,
+        iconSize: dynamicSize,
+        iconAnchor: [12, 12],
+        popupAnchor: [0, 0],
     });
+
+    const markers = [];
+
+    const updateIconStyle = () => {
+        for (const marker of markers) {
+            const icon = marker._icon;
+            if (!icon) {
+                continue;
+            }
+            const heading = icon.getAttribute('data-heading');
+            if (icon.style.transform.indexOf('rotateZ') === -1) {
+                icon.style.transform = `${
+                    icon.style.transform
+                } rotateZ(${heading || 0}deg)`;
+                icon.style.transformOrigin = 'center';
+            }
+        }
+    };
+
+    try {
+        let hue = 0;
+        for (const station of stations.value) {
+            hue = (hue + 60) % 360;
+            const marker = L.marker([station.latitude, station.longitude], {
+                icon: CameraIcon,
+            }).addTo(map);
+
+            console.log(marker);
+
+            markers.push(marker);
+            marker._icon.setAttribute('data-heading', station.name);
+            marker.bindPopup(`<div  class="font-bold flex flex-col">
+                    <p class="!m-0 !mb-2">${station.code} - ${station.name}</p>
+                    <p class="!m-0 !mb-2">
+                        ที่ตั้ง: ${station.location }
+                    </p>
+                    <p class="!m-0">ละติจูด: ${ station.latitude }</p>
+                    <p class="!m-0">ลองจิจูด: ${ station.longitude }</p>
+                    <p class="!m-0 !mb-2">สถานะ: ${ station.status ? 'ออนไลน์' : 'ออฟไลน์' }</p>
+                    <a class="self-center" href="stations/${station.code}" color="white">View</a>
+                </div>
+            `)
+
+            updateIconStyle();
+        }
+    } catch (error) {
+        console.error(`Error querying boats: ${error.message}`);
+    }
+    map.on('zoom', updateIconStyle);
+    map.on('zoomend', updateIconStyle);
+    map.on('viewreset', updateIconStyle);
 }
 
 </script>
