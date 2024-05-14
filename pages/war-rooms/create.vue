@@ -41,7 +41,7 @@
         </button>
 
         <button
-            class="bg-white-500 border-2 border-black grid grid-cols-3 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 flex items-center justify-center mx-0 m-0"
+            class="bg-white-500 border-2 border-black grid grid-cols-3 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 items-center justify-center mx-0 m-0"
             @click="showSixView"
         >
             <div class="border-2 border-black p-5 w-1/2 bg-orange-500"></div>
@@ -55,7 +55,7 @@
 
     <div class="flex justify-center mt-5">
         <button
-            class="bg-white-500 border-2 border-black grid grid-cols-3 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 flex items-center justify-center mx-0 m-0"
+            class="bg-white-500 border-2 border-black grid grid-cols-3 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 items-center justify-center mx-0 m-0"
             @click="showGutterView"
         >
             <div
@@ -70,7 +70,7 @@
 
         <div>
             <button
-                class="bg-white-500 border-2 border-black grid grid-cols-4 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 flex items-center justify-center mx-0 m-0"
+                class="bg-white-500 border-2 border-black grid grid-cols-4 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 items-center justify-center mx-0 m-0"
                 @click="showEightView"
             >
                 <div
@@ -101,7 +101,7 @@
         </div>
 
         <button
-            class="bg-white-500 border-2 border-black grid grid-cols-3 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 flex items-center justify-center mx-0 m-0"
+            class="bg-white-500 border-2 border-black grid grid-cols-3 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 items-center justify-center mx-0 m-0"
             @click="showNineView"
         >
             <div class="border-2 border-black p-5 w-1/2 bg-orange-500"></div>
@@ -116,7 +116,7 @@
         </button>
 
         <button
-            class="bg-white-500 border-2 border-black grid grid-cols-4 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 flex items-center justify-center mx-0 m-0"
+            class="bg-white-500 border-2 border-black grid grid-cols-4 text-white px-4 py-2 hover:bg-orange-500 w-70 ml-2 items-center justify-center mx-0 m-0"
             @click="showTwogutterView"
         >
             <div
