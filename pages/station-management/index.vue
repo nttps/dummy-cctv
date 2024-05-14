@@ -1,6 +1,6 @@
 <template>
   <div>
-    <editstation />
+    <EditStation />
   </div>
 </template>
 
