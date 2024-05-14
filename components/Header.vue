@@ -1,24 +1,27 @@
 <template>
     <div>
-        <div class="container flex items-center">
-            <div class="header flex items-center justify-between ml-12 mt-5">
-                <img
-                    src="https://i.ibb.co/d21pGfk/Ndwc-removebg-preview.png"
-                    alt="Discover Nuxt 3"
-                    class="mr-5"
-                />
-                <div
-                    class="title text-black text-xl font-kanit px-10 whitespace-nowrap"
-                >
-                    <p class="orange-text text-3xl font-semibold text-orange-500">
-                        ระบบติดตามสถานการณ์น้ำผ่านกล้องโทรทัศน์วงจรปิด
-                    </p>
-                    <p class="text-lg font-medium">ศูนย์เตือนภัยพิบัติแห่งชาติ</p>
-                    <p class="text-lg font-medium">
-                        National Disaster Warning Center
-                    </p>
+        <div class="px-2 lg:px-4 flex items-center w-full mb-2">
+            <div class="header flex items-center justify-between mt-5 w-full">
+                <div class="flex items-center">
+                    <img
+                        src="https://i.ibb.co/d21pGfk/Ndwc-removebg-preview.png"
+                        alt="Discover Nuxt 3"
+                        class="mr-5"
+                    />
+                    <div
+                        class="title text-black text-xl font-kanit px-10 text-center lg:text-left "
+                    >
+                        <p class="orange-text text-xl lg:text-3xl font-semibold text-orange-500">
+                            ระบบติดตามสถานการณ์น้ำผ่านกล้องโทรทัศน์วงจรปิด
+                        </p>
+                        <p class="text-lg font-medium">ศูนย์เตือนภัยพิบัติแห่งชาติ</p>
+                        <p class="text-lg font-medium">
+                            National Disaster Warning Center
+                        </p>
+                    </div>
                 </div>
-                <div style="margin-left: 750px; display: flex">
+                
+                <div style="display: flex">
                     <UDropdown :items="items" :popper="{ placement: 'bottom-start' }" v-if="auth.user">
                         <UButton :ui="{ rounded: 'rounded-3xl' }" color="orange" class="rounded-3xl text-white px-4 py-2" label="ADMIN" trailing-icon="i-heroicons-chevron-down-20-solid" />
                     </UDropdown>

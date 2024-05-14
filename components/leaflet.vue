@@ -134,10 +134,10 @@ const initMap = async () => {
 .map-container {
     display: flex;
     justify-content: center;
-    margin-left: 100px;
-    margin-top: 30px;
-    width: 1700px;
-    height: 650px;
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 1700px;
+    width: 100%;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
 }
 </style>
