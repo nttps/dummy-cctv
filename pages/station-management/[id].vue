@@ -3,7 +3,7 @@
         <div class="text-orange-500">
             ==========================================&nbsp;&nbsp;
         </div>
-        <p>Create CCTV</p>
+        <p>Edit CCTV</p>
         <div class="text-orange-500">
             &nbsp;&nbsp;==========================================
         </div>
@@ -46,6 +46,7 @@
                             :rows="1"
                             type="text"
                             maxlength="140"
+                            v-model="station.name"
                             class="w-full px-2 py-2 rounded-xl text-xl border-none text-black"
                         />
                     </div>
@@ -80,6 +81,7 @@
                             resize
                             type="text"
                             size="xl"
+                            v-model="station.location"
                             class="w-full px-2 py-2 rounded-xl text-xl border-none text-black"
                         />
                     </div>
@@ -113,6 +115,7 @@
                             type="text"
                             maxlength="140"
                             class="w-full px-2 py-2 rounded-xl text-xl border-none text-black"
+                            v-model="station.latitude"
                         />
                     </div>
                     <div class="flex items-center text-black">
@@ -124,6 +127,7 @@
                             :rows="1"
                             type="text"
                             maxlength="140"
+                            v-model="station.longitude"
                             class="w-full px-2 py-2 rounded-xl text-xl border-none text-black"
                         />
                     </div>
@@ -235,11 +239,24 @@
 </template>
 
 <script setup lang="ts">
-const searchTerm = ref("");
 
-const search = () => {
-    console.log("ค้นหา: ", searchTerm.value);
+const route = useRoute();
+
+const station = ref({
+    name: "",
+})
+const fetchStationData = async () => {
+    try {
+        const response = await $fetch(`/api/v1/stations/${route.params.id}`);
+        station.value = response;
+    } catch (error) {
+        console.error("Error fetching station data:", error);
+    }
 };
+
+onMounted(() => {
+    fetchStationData();
+});
 
 </script>
 
