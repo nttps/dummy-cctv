@@ -112,18 +112,20 @@
             <NuxtLink
                 class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
                 to="/"
+                exactActiveClass="text-orange-500 font-bold"
             >
                 HOME
             </NuxtLink>
-            <div
+            <NuxtLink
                 class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
-                @click="navigateTo('/stations')"
+                to="/stations"
+                exactActiveClass="text-orange-500 font-bold"
             >
                 STATION LIST
-            </div>
-            <div class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" v-if="auth.user" @click="navigateTo('/war-rooms')">WARROOM</div>
-            <div class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" v-if="auth.user" @click="navigateTo('/station-management')">STATION MANAGEMENT</div>
-            <div class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" v-if="auth.user" @click="navigateTo('/users')">USER MANAGEMENT</div>
+            </NuxtLink>
+            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/war-rooms">WARROOM</NuxtLink>
+            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/station-management">STATION MANAGEMENT</NuxtLink>
+            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/users">USER MANAGEMENT</NuxtLink>
         </div>
         <div class="language-button flex items-center mr-10">
             <button
