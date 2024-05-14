@@ -1,5 +1,7 @@
 <template>
-    <Header />
+    <client-only>
+        <Header />
+    </client-only>
     <NuxtPage />
     <div class="mt-10">
         <Footer />

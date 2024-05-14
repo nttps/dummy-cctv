@@ -55,7 +55,7 @@
                     <div
                         class="w-[200px] h-[150px] object-cover overflow-hidden"
                     >
-                        <Button
+                        <button
                             @click="navigateTo(`/stations/${station.code}`)"
                         >
                             <img
@@ -63,7 +63,7 @@
                                 :alt="station.title"
                                 class="w-full h-full mt-3 object-cover transform hover:border-2 border-red-500"
                             />
-                        </Button>
+                        </button>
                     </div>
                 </div>
                 <div class="ml-5">
@@ -157,7 +157,7 @@ const fetchData = async () => {
     try {
         const response = await $fetch("/api/v1/stations");
         stations.value = response.data;
-        pageTotal.value = response.count;
+        pageTotal.value = response.total;
     } catch (error) {
         console.error("Error fetching station:", error);
     }

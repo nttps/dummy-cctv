@@ -98,9 +98,6 @@ const initMap = async () => {
             const marker = L.marker([station.latitude, station.longitude], {
                 icon: CameraIcon,
             }).addTo(map);
-
-            console.log(marker);
-
             markers.push(marker);
             marker._icon.setAttribute('data-heading', station.name);
             marker.bindPopup(`<div  class="font-bold flex flex-col">
