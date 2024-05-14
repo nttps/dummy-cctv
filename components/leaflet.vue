@@ -42,12 +42,8 @@
 </template>
 
 <script setup>
-
-
 useHead({
-    script: [{ 
-        src: 'https://unpkg.com/leaflet@1.4.0/dist/leaflet.js'
-    }]
+    script: []
 })
 
 const dynamicSize = [38, 38];
