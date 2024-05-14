@@ -1,7 +1,7 @@
 <template>
     <div class="twogutterview">
       <div class="flex justify-center">
-            <div class="flex flex-row border-2 gap-x-0 gap-y-0  border-black p-5 w-5/12 mt-10 grid grid-cols-4  bg-orange-500">
+            <div class="flex-row border-2 gap-x-0 gap-y-0  border-black p-5 w-5/12 mt-10 grid grid-cols-4  bg-orange-500">
               <div class="border-2 border-black p-5 w-2/2 w-full h-full col-span-2 row-span-2 bg-orange-500" :class="{ 'bg-black border-black': isAddClicked }"></div>   
               <div class="border-2 border-white p-5 w-2/2 w-full h-full col-span-2 row-span-2 bg-black text-white" :class="{ 'bg-black border-black': isAddClicked }">
                 <button class="bg-orange-500 rounded-full text-white  hover:bg-orange-600    flex items-center justify-center " :class="{ 'bg-black border-black': isAddClicked }">

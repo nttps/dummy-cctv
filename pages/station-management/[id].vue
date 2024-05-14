@@ -238,12 +238,15 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 
 const route = useRoute();
 
 const station = ref({
     name: "",
+    location: "",
+    latitude:"",
+    longitude:""
 })
 const fetchStationData = async () => {
     try {
