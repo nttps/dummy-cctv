@@ -44,7 +44,7 @@
     <div class="container flex items-center ml-[165px]">
         <div class="user-cards flex flex-wrap justify-center mt-5">
             <div
-                v-for="(station, index) in station.slice(
+                v-for="(station, index) in stations.slice(
                     (page - 1) * pageCount,
                     page * pageCount
                 )"
@@ -125,9 +125,9 @@
     </div>
     <div class="mt-10 mb-10 flex justify-center">
         <UPagination
-            v-model:selectedPage="page"
-            :page-count="Math.ceil(station.length / pageCount)"
-            :total="station.length"
+            v-model="page"
+            :page-count="pageCount"
+            :total="pageTotal"
             @change="handlePageChange"
             :ui="{
                 wrapper: 'flex items-center gap-1',
@@ -143,9 +143,8 @@
 </template>
 
 <script setup>
-const station = ref([]);
+const stations = ref([]);
 const searchTerm = ref("");
-const sort = ref({ column: "id", direction: "asc" });
 const page = ref(1);
 const pageCount = ref(10);
 const pageTotal = ref(20);
@@ -158,8 +157,8 @@ const pageTo = computed(() =>
 const fetchData = async () => {
     try {
         const response = await $fetch("/api/v1/stations");
-        station.value = response.data;
-        pageTotal.value = response.data.length;
+        stations.value = response.data;
+        pageTotal.value = response.count;
     } catch (error) {
         console.error("Error fetching station:", error);
     }
