@@ -1,8 +1,4 @@
-//import { PrismaClient } from "@prisma/client";
-//import { pagination } from "~/utils/crud";
-//const prisma = new PrismaClient();
-
-const stations = [
+[
     {
         code: "01",
         name: "สะพานปทุมธานี 1",
@@ -48,19 +44,3 @@ const stations = [
         status: true,
     },
 ];
-
-
-export default defineEventHandler(async (event) => {
-    const query = getQuery(event);
-    const params = {
-    };
-
-    const include = {
-    };
-
-    return {
-        data: stations,
-        count: stations.length,
-    };
-    //return await pagination(prisma.cctvStation, event, params, include);
-});
