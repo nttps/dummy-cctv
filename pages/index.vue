@@ -1,7 +1,6 @@
 <template>
     <div>
-        <leaflet /> 
-         
+        <Leaflet /> 
     </div>
     
 </template>

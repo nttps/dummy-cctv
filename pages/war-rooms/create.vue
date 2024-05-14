@@ -139,14 +139,14 @@
     <div class="text-3xl mt-20 flex ml-32 text-black">Manage CCTV :</div>
 
     <div>
-        <twinview v-if="currentView === 'twinview'" />
-        <threeview v-else-if="currentView === 'threeview'" />
-        <fourview v-else-if="currentView === 'fourview'" />
-        <sixview v-else-if="currentView === 'sixview'" />
-        <gutterview v-else-if="currentView === 'gutterview'" />
-        <eightview v-else-if="currentView === 'eightview'" />
-        <nineview v-else-if="currentView === 'nineview'" />
-        <twogutterview v-else-if="currentView === 'twogutterview'" />
+        <GridViewTwin v-if="currentView === 'twinview'" />
+        <GridViewThree v-else-if="currentView === 'threeview'" />
+        <GridViewFour v-else-if="currentView === 'fourview'" />
+        <GridViewSix v-else-if="currentView === 'sixview'" />
+        <GridViewGutter v-else-if="currentView === 'gutterview'" />
+        <GridViewEight v-else-if="currentView === 'eightview'" />
+        <GridViewNine v-else-if="currentView === 'nineview'" />
+        <GridViewTwo v-else-if="currentView === 'twogutterview'" />
     </div>
 </template>
 
