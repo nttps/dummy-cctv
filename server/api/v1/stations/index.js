@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
     return {
         data: stations,
-        count: stations.length,
+        total: stations.length,
     };
     //return await pagination(prisma.cctvStation, event, params, include);
 });

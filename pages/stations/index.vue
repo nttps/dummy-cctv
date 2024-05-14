@@ -128,7 +128,6 @@
             v-model="page"
             :page-count="pageCount"
             :total="pageTotal"
-            @change="handlePageChange"
             :ui="{
                 wrapper: 'flex items-center gap-1',
                 rounded: '!rounded-full min-w-[32px] justify-center',
@@ -172,9 +171,6 @@ const search = () => {
     page.value = 1;
 };
 
-const handlePageChange = (newPage) => {
-    page.value = newPage;
-};
 </script>
 
 <style>
