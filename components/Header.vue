@@ -112,20 +112,20 @@
             <NuxtLink
                 class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
                 to="/"
-                exactActiveClass="text-orange-500"
+                exactActiveClass="text-orange-500 font-bold"
             >
                 HOME
             </NuxtLink>
             <NuxtLink
                 class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
                 to="/stations"
-                exactActiveClass="text-orange-500"
+                exactActiveClass="text-orange-500 font-bold"
             >
                 STATION LIST
             </NuxtLink>
-            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500" v-if="auth.user" to="/war-rooms">WARROOM</NuxtLink>
-            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500" v-if="auth.user" to="/station-management">STATION MANAGEMENT</NuxtLink>
-            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500" v-if="auth.user" to="/users">USER MANAGEMENT</NuxtLink>
+            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/war-rooms">WARROOM</NuxtLink>
+            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/station-management">STATION MANAGEMENT</NuxtLink>
+            <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/users">USER MANAGEMENT</NuxtLink>
         </div>
         <div class="language-button flex items-center mr-10">
             <button
