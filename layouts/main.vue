@@ -1,10 +1,9 @@
 <template>
     <client-only>
-        <Header />
+        <Header fixed />
     </client-only>
-    <div class=" min-h-screen">
-        <NuxtPage />
-    </div>
+    
+    <NuxtPage />
     <div class="mt-10">
         <Footer />
     </div>
