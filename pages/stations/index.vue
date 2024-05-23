@@ -1,69 +1,41 @@
 <template>
-    <div class="flex justify-center text-black font-semibold text-4xl mt-5">
-        <div class="text-orange-500">
-            ==========================================&nbsp;&nbsp;
-        </div>
-        <p>Station List</p>
-        <div class="text-orange-500">
-            &nbsp;&nbsp;==========================================
-        </div>
-    </div>
+    <div class="px-10">
 
-    <div class="flex justify-center text-black text-xl mt-5">
-        <p class="mr-2 mt-2">Station Name :</p>
-        <input
-            type="text"
-            v-model="searchTerm"
-            placeholder="Search..."
-            class="bg-white px-4 py-2 rounded-md border border-gray-300 w-3/6"
-        />
-        <button
-            @click="search"
-            class="bg-green-500 rounded-md text-white px-4 py-2 hover:bg-green-600 w-32 ml-2 flex items-center justify-center"
-        >
-            <span class="mr-2">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                    />
-                </svg>
-            </span>
-            Search
-        </button>
-    </div>
+        <UBreadcrumb :links="links" class="mt-4" />
+        <div class=" text-black font-semibold text-4xl mt-5">
+            รายการสถานี
+        </div>
 
-    <div class="container flex items-center ml-[165px]">
-        <div class="user-cards flex flex-wrap justify-center mt-5">
-            <div
+        <div class="flex justify-center text-black text-xl mt-5 space-x-4">
+            <p class="mr-2 mt-2">ชื่อสถานี</p>
+            <input
+                type="text"
+                v-model="searchTerm"
+                placeholder="คำค้นหา"
+                class="bg-white px-4 py-2 rounded-md border border-gray-300 w-3/6"
+            />
+            <UButton icon="i-heroicons-magnifying-glass" size="xl" label="ค้นหา" @click="search" />
+        </div>
+
+        <div class="grid grid-cols-3 mt-5">
+            <NuxtLink
                 v-for="(station, index) in stations.slice(
                     (page - 1) * pageCount,
                     page * pageCount
                 )"
                 :key="index"
-                class="user-card w-[calc(40%-2rem)] p-4 m-4 border rounded-xl flex items-center shadow-xl shadow-black/20 bg-[#E7E7E7]"
+                :to="`/stations/${station.code}`"
+                class=" p-4 m-4 border rounded-xl flex items-center shadow-xl shadow-black/20 bg-[#E7E7E7]"
             >
                 <div>
                     <div
-                        class="w-[200px] h-[150px] object-cover overflow-hidden"
+                        class="w-[200px] overflow-hidden"
                     >
-                        <button
-                            @click="navigateTo(`/stations/${station.code}`)"
-                        >
-                            <img
-                                src="~/assets/image.png"
-                                :alt="station.title"
-                                class="w-full h-full mt-3 object-cover transform hover:border-2 border-red-500"
-                            />
-                        </button>
+                        <img
+                            src="~/assets/image.png"
+                            :alt="station.title"
+                            class="w-full h-full mt-3 object-contain transform hover:border-2 border-red-500"
+                        />
                     </div>
                 </div>
                 <div class="ml-5">
@@ -120,24 +92,24 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </NuxtLink>
         </div>
-    </div>
-    <div class="mt-10 mb-10 flex justify-center">
-        <UPagination
-            v-model="page"
-            :page-count="pageCount"
-            :total="pageTotal"
-            :ui="{
-                wrapper: 'flex items-center gap-1',
-                rounded: '!rounded-full min-w-[32px] justify-center',
-                default: {
-                    activeButton: {
-                        variant: 'outline',
+        <div class="mt-10 mb-10 flex justify-center">
+            <UPagination
+                v-model="page"
+                :page-count="pageCount"
+                :total="pageTotal"
+                :ui="{
+                    wrapper: 'flex items-center gap-1',
+                    rounded: '!rounded-full min-w-[32px] justify-center',
+                    default: {
+                        activeButton: {
+                            variant: 'outline',
+                        },
                     },
-                },
-            }"
-        />
+                }"
+            />
+        </div>
     </div>
 </template>
 
@@ -152,6 +124,15 @@ const pageFrom = computed(() => (page.value - 1) * pageCount.value + 1);
 const pageTo = computed(() =>
     Math.min(page.value * pageCount.value, pageTotal.value)
 );
+
+const links = [{
+    label: 'หน้าแรก',
+    icon: 'i-heroicons-home',
+    to: '/'
+}, {
+    label: 'รายการสถานี',
+    icon: 'i-heroicons-square-3-stack-3d',
+}]
 
 const fetchData = async () => {
     try {

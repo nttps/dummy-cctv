@@ -1,173 +1,168 @@
 <template>
-    <div>
+    <div :class="fixed !== undefined ? `fixed top-0 w-auto z-[1]`: ``">
         <div class="px-2 lg:px-4 flex items-center w-full mb-2">
             <div class="header flex items-center justify-between mt-5 w-full">
-                <div class="flex items-center">
-                    <img
-                        src="https://i.ibb.co/d21pGfk/Ndwc-removebg-preview.png"
-                        alt="Discover Nuxt 3"
-                        class="mr-5"
-                    />
-                    <div
-                        class="title text-black text-xl font-kanit px-10 text-center lg:text-left "
-                    >
-                        <p class="orange-text text-xl lg:text-3xl font-semibold text-orange-500">
-                            ระบบติดตามสถานการณ์น้ำผ่านกล้องโทรทัศน์วงจรปิด
-                        </p>
-                        <p class="text-lg font-medium">ศูนย์เตือนภัยพิบัติแห่งชาติ</p>
-                        <p class="text-lg font-medium">
-                            National Disaster Warning Center
-                        </p>
-                    </div>
-                </div>
-                
-                <div style="display: flex">
-                    <UDropdown :items="items" :popper="{ placement: 'bottom-start' }" v-if="auth.user">
-                        <UButton :ui="{ rounded: 'rounded-3xl' }" color="orange" class="rounded-3xl text-white px-4 py-2" label="ADMIN" trailing-icon="i-heroicons-chevron-down-20-solid" />
-                    </UDropdown>
-                    <UButton
-                        v-else
-                        :ui="{ rounded: 'rounded-3xl' }"
-                        color="orange"
-                        class="rounded-3xl text-white px-4 py-2"
-                        @click="isOpen = true"
-                        >LOG ON</UButton
-                    >
-                </div>
-
-                <UModal v-model="isOpen" prevent-close>
-                    <div class="justify-end flex">
+                <div class="flex items-center space-x-4">
                         <UButton
-                            :ui="{}"
-                            color="red"
-                            variant="ghost"
-                            icon="i-heroicons-x-mark-20-solid"
-                            @click="isOpen = false"
-                        />
-                    </div>
-                    <UCard
-                        :ui="{
-                            ring: '',
-                            background: 'bg-white dark:bg-white',
-                            divide: 'divide-y divide-white dark:divide-white',
-                        }"
-                    >
-                        <template #header>
-                            <div class="justify-center flex">
-                                <h1
-                                    class="text-3xl font-semibold leading-6 text-black dark:text-black"
-                                >
-                                    เข้าสู่ระบบ
-                                </h1>
-                            </div>
-                            <UForm
-                                :validate="validate"
-                                :state="state"
-                                class="space-y-4"
-                            >
-                                <UFormGroup
-                                    class="mt-5"
-                                    label="ชื่อบัญชี"
-                                    name="id"
-                                    :ui="{
-                                        label: {
-                                            base: 'block font-medium text-black dark:text-black',
-                                        },
-                                    }"
-                                >
-                                    <UInput v-model="state.id" />
-                                </UFormGroup>
-                                <UFormGroup
-                                    label="รหัสผ่าน"
-                                    name="password"
-                                    :ui="{
-                                        label: {
-                                            base: 'block font-medium text-black dark:text-black',
-                                        },
-                                    }"
-                                >
-                                    <UInput
-                                        v-model="state.password"
-                                        type="password"
-                                    />
-                                </UFormGroup>
-                                <div class="justify-center flex">
-                                    <UButton
-                                        class="flex justify-center py-2.5"
-                                        color="orange"
-                                        @click="login"
-                                        >เข้าสู่ระบบ</UButton
-                                    >
-                                </div>
-                            </UForm>
-                        </template>
-                        <div
-                            v-if="loginFailed"
-                            class="text-red-600 flex justify-center"
+                            :ui="{ rounded: 'rounded-3xl', size: { xl: 'text-3xl'} }"
+                            size="xl"
+                            square
+                            @click="isOpen = true"
                         >
-                            ชื่อบัญชีหรือรหัสผ่านไม่ถูกต้อง
+                            <UIcon name="i-iconamoon-menu-burger-horizontal-bold" dynamic />
+                        </UButton>
+
+                        <div
+                            class="title text-xl font-kanit text-center lg:text-left bg-black/20 py-2 px-5 rounded-full"
+                        >
+                            <p class="orange-text text-xl lg:text-2xl font-semibold text-white">
+                                ระบบติดตามสถานการณ์น้ำผ่านกล้องโทรทัศน์วงจรปิด
+                            </p>
                         </div>
+
+                </div>
+    
+
+                <USlideover v-model="isOpen" side="left">
+                    <UCard  :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+                        <template #header>
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                                    เมนู
+                                </h3>
+                                <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpen = false" />
+                            </div>
+                        </template>
+
+                        <nav class="relative">
+                            <ul>
+                                <template v-for="link in links">
+                                    <li v-if="link.permission && auth.user">
+                                        <NuxtLink :to="link.to" class="group relative flex items-center gap-1.5 focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-1 focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 before:absolute before:inset-px before:rounded-md disabled:cursor-not-allowed disabled:opacity-75 px-2.5 py-1.5 w-full focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 rounded-md font-medium text-xl text-gray-900 dark:text-white hover:bg-gray-600 hover:text-white">
+                                            <Icon :name="link.icon" class="flex-shrink-0 w-5 h-5 relative text-gray-400 " />
+                                            <span class="truncate relative">{{ link.label }}</span>
+                                        </NuxtLink>
+                                    </li>
+                                    <li v-if="!link.permission">
+                                        <NuxtLink :to="link.to" class="group relative flex items-center gap-1.5 focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-1 focus-visible:before:ring-primary-500 dark:focus-visible:before:ring-primary-400 before:absolute before:inset-px before:rounded-md disabled:cursor-not-allowed disabled:opacity-75 px-2.5 py-1.5 w-full focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 rounded-md font-medium text-xl text-gray-900 dark:text-white hover:bg-gray-600 hover:text-white">
+                                            <Icon :name="link.icon" class="flex-shrink-0 w-5 h-5 relative text-gray-400 "/>
+                                            <span class="truncate relative">{{ link.label }}</span>
+                                        </NuxtLink>
+                                    </li>
+                                </template>
+                            </ul>
+                        </nav>
+
+                        <UButton
+                            :ui="{ rounded: 'rounded-3xl' }"
+                            size="xl"
+                            class="w-full justify-center mt-4"
+                            @click="isOpenLogin = true"
+                            v-if="!auth.user"
+                            >เข้าสู่ระบบ</UButton
+                        >
+                        <UButton
+                            :ui="{ rounded: 'rounded-3xl' }"
+                            size="xl"
+                            color="red"
+                            class="w-full justify-center mt-4"
+                            @click="auth.setAuth(null)"
+                            v-else
+                            >ออกจากระบบ</UButton
+                        >
                     </UCard>
-                </UModal>
-            </div>
-        </div>
-        <div class="menu flex items-center bg-black text-white py-3">
-            <ul class="menu-items flex mr-auto">
-                <NuxtLink   
-                    class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
-                    to="/"
-                    exactActiveClass="text-orange-500 font-bold"
-                >
-                    HOME
-                </NuxtLink>
-                <NuxtLink
-                    class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl"
-                    to="/stations"
-                    exactActiveClass="text-orange-500 font-bold"
-                >
-                    STATION LIST
-                </NuxtLink>
-                <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" activeClass="text-orange-500 font-bold" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/war-rooms">WARROOM</NuxtLink>
-                <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" activeClass="text-orange-500 font-bold" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/station-management">STATION MANAGEMENT</NuxtLink>
-                <NuxtLink class="menu-item ml-32 cursor-pointer hover:text-orange-500 text-3xl" activeClass="text-orange-500 font-bold" exactActiveClass="text-orange-500 font-bold" v-if="auth.user" to="/users">USER MANAGEMENT</NuxtLink>
-            </ul>
-            <div class="language-button flex items-center mr-10">
-                <button
-                    @click="changeLanguage('en')"
-                    class="flex items-center hover:text-orange-500"
-                >
-                    <img
-                        src="https://i.ibb.co/5nLy679/united-kingdom-555417.png"
-                        alt="ธงอังกฤษ"
-                        class="w-5 h-auto mr-1"
-                    />
-                    EN
-                </button>
-                <h1 class="mx-1">│</h1>
-                <button
-                    @click="changeLanguage('th')"
-                    class="flex items-center hover:text-orange-500"
-                >
-                    <img
-                        src="https://i.ibb.co/0jG8KPB/thailand-555495.png"
-                        alt="ธงไทย"
-                        class="w-5 h-auto mr-1"
-                    />
-                    ไทย
-                </button>
+
+                    <UModal v-model="isOpenLogin" prevent-close>
+                        <div class="justify-end flex">
+                            <UButton
+                                :ui="{}"
+                                color="red"
+                                variant="ghost"
+                                icon="i-heroicons-x-mark-20-solid"
+                                @click="isOpenLogin = false"
+                            />
+                        </div>
+                        <UCard
+                            :ui="{
+                                ring: '',
+                                background: 'bg-white dark:bg-white',
+                                divide: 'divide-y divide-white dark:divide-white',
+                            }"
+                        >
+                            <template #header>
+                                <div class="justify-center flex">
+                                    <h1
+                                        class="text-3xl font-semibold leading-6 text-black dark:text-black"
+                                    >
+                                        เข้าสู่ระบบ
+                                    </h1>
+                                </div>
+                                <UForm
+                                    :validate="validate"
+                                    :state="state"
+                                    class="space-y-4"
+                                >
+                                    <UFormGroup
+                                        class="mt-5"
+                                        label="ชื่อบัญชี"
+                                        name="id"
+                                        :ui="{
+                                            label: {
+                                                base: 'block font-medium text-black dark:text-black',
+                                            },
+                                        }"
+                                    >
+                                        <UInput v-model="state.id" />
+                                    </UFormGroup>
+                                    <UFormGroup
+                                        label="รหัสผ่าน"
+                                        name="password"
+                                        :ui="{
+                                            label: {
+                                                base: 'block font-medium text-black dark:text-black',
+                                            },
+                                        }"
+                                    >
+                                        <UInput
+                                            v-model="state.password"
+                                            type="password"
+                                        />
+                                    </UFormGroup>
+                                    <div class="justify-center flex">
+                                        <UButton
+                                            class="flex justify-center py-2.5"
+                                            @click="login"
+                                            >เข้าสู่ระบบ</UButton
+                                        >
+                                    </div>
+                                </UForm>
+                            </template>
+                            <div
+                                v-if="loginFailed"
+                                class="text-red-600 flex justify-center"
+                            >
+                                ชื่อบัญชีหรือรหัสผ่านไม่ถูกต้อง
+                            </div>
+                        </UCard>
+                    </UModal>
+                </USlideover>
             </div>
         </div>
     </div>
+
+   
 </template>
 
 <script setup lang="ts">
     import type { FormError, FormSubmitEvent } from "#ui/types";
 
+    const props = defineProps(['fixed'])
 
     const isOpen = ref(false);
     const loginFailed = ref(false);
     const loggedIn = ref(false);
     const auth = useAuthStore()
+    const isOpenLogin = ref(false);
 
     const language = ref('th')
 
@@ -183,7 +178,35 @@
             }
         }]
     ]
-    
+
+    const route = useRoute()
+
+    const links = [{
+        label: 'หน้าแรก',
+        icon: 'i-heroicons-home',
+        to: '/',
+        permission: false
+    }, {
+        label: 'สถานี',
+        icon: 'i-heroicons-chart-bar',
+        to: `/stations`,
+        permission: false
+    }, {
+        label: 'ห้องปฎิบัติการ',
+        icon: 'i-heroicons-command-line',
+        to: '/war-rooms',
+        permission: true
+    }, {
+        label: 'จัดการสถานี',
+        icon: 'i-heroicons-command-line',
+        to: '/station-management',
+        permission: true
+    }, {
+        label: 'จัดการผู้ใช้งาน',
+        icon: 'i-heroicons-command-line',
+        to: '/users',
+        permission: true
+    }]
 
 
     const state = reactive({
@@ -205,7 +228,7 @@
 
         if (state.id === username && state.password === password) {
             loggedIn.value = true;
-            isOpen.value = false;
+            isOpenLogin.value = false;
 
             auth.setAuth(username)
             loginFailed.value = false;

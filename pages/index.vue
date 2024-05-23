@@ -1,12 +1,13 @@
 <template>
-    <div>
+    <div class="fixed w-full h-screen top-0 left-0">
         <Leaflet /> 
     </div>
-    
 </template>
 
 <script setup lang="ts">
-
+definePageMeta({
+    layout: 'main'
+})
 
 </script>
 

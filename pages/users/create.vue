@@ -1,17 +1,8 @@
 <template>
-    <div class="flex justify-center text-black font-semibold text-4xl mt-5">
-        <div class="text-orange-500">
-            ==========================================&nbsp;&nbsp;
-        </div>
-        <p>Create User</p>
-        <div class="text-orange-500">
-            &nbsp;&nbsp;==========================================
-        </div>
-    </div>
-    <div class="flex justify-center">
+    <div class="px-10">
         <div>
             <div
-                class="w-full max-w-[90vw] rounded-xl overflow-hidden shadow-xl shadow-black/20 bg-white mt-5 ml-5 mr-96"
+                class="w-full rounded-xl overflow-hidden shadow-xl shadow-black/20 bg-white mt-5"
             >
                 <!-- Header and close button -->
                 <div
@@ -19,7 +10,7 @@
                 >
                     <div class="flex items-center gap-3">
                         <p class="text-[30px] font-medium text-white">
-                            Create User
+                            เพิ่มผู้ใช้งาน
                         </p>
                     </div>
                 </div>
@@ -122,33 +113,32 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div class="flex justify-center mt-10 mb-10">
+            <div>
+                <UButton
+                    icon="i-heroicons-check"
+                    size="xl"
+                    color="primary"
+                    variant="solid"
+                    label="บันทึก"
+                    :trailing="false"
+                    class="w-44 justify-center"
+                    @click="navigateTo('USER MANAGEMENT')"
+                />
+            </div>
 
-    <div class="flex justify-center mt-10 mb-10">
-        <div>
-            <UButton
-                icon="i-heroicons-check"
-                size="xl"
-                color="primary"
-                variant="solid"
-                label="Summit"
-                :trailing="false"
-                class="w-44 justify-center"
-                @click="navigateTo('USER MANAGEMENT')"
-            />
-        </div>
-
-        <div>
-            <UButton
-                icon="i-heroicons-x-mark"
-                size="xl"
-                variant="solid"
-                label="Cancel"
-                :trailing="false"
-                color="grey"
-                class="ml-10 bg-gray-500 hover:bg-gray-600 w-44 justify-center"
-                @click="navigateTo('/users')"
-            />
+            <div>
+                <UButton
+                    icon="i-heroicons-x-mark"
+                    size="xl"
+                    variant="solid"
+                    label="ยกเลิก"
+                    :trailing="false"
+                    color="grey"
+                    class="ml-10 bg-gray-500 hover:bg-gray-600 w-44 justify-center"
+                    @click="navigateTo('/users')"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -158,8 +148,6 @@ const searchTerm = ref("");
 const selectedWarroom = ref(false);
 const selectedStation = ref(false);
 const selectedUser = ref(false);
-
-
 </script>
 
 <style>

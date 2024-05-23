@@ -1,22 +1,14 @@
 <template>
-    <div>
-        <div class="flex justify-center text-black font-semibold text-4xl mt-5">
-            <div class="text-orange-500">
-                ==========================================&nbsp;&nbsp;
-            </div>
-            <p>Station Detail</p>
-            <div class="text-orange-500">
-                &nbsp;&nbsp;==========================================
-            </div>
-        </div>
+    <div class="px-4">
+        <UBreadcrumb :links="links" v-if="breadcrumbs" class="mt-4" />
         <div class=" flex justify-center">
-        <div
-                class="border-2 bg-white border-black p-1 w-[1300px] h-[150px] rounded-xl  mt-10"
+            <div
+                class="border-2 bg-white border-black p-1 w-full rounded-xl  mt-4"
             >
-                <p class="text-black font-bold text-4xl text-center">
+                <p class="text-black mb-2 font-bold text-4xl text-center">
                     Station Name
                 </p>
-                <div class="flex justify-center mt-10 text-black text-xl">
+                <div class="flex justify-center text-black text-xl">
                     <p>{{ station.code }} - {{ station.name }}</p>
                 </div>
             </div> 
@@ -199,43 +191,46 @@
     </div>
 </template>
 
-<script setup lang="ts">
-const videoPlayer = ref<HTMLVideoElement | null>(null);
+<script setup>
+    import { format } from "date-fns";
+    const videoPlayer = ref(null);
 
-onMounted(() => {
-  if (videoPlayer.value) {
-    videoPlayer.value.play();
-  }
-});
-import { format } from "date-fns";
-const date = ref(new Date());
-const date2 = ref(new Date());
-const date3 = ref(new Date());
-const route = useRoute();
-const station = ref<any>({
-    videoUrl: "https://www.youtube.com/embed/Qu8bDQjuN64", 
-});
+    onMounted(() => {
+        fetchStationData();
+    });
 
-const fetchStationData = async () => {
-    try {
-        const response = await $fetch(`/api/v1/stations/${route.params.id}`);
-        station.value = response;
-    } catch (error) {
-        console.error("Error fetching station data:", error);
-    }
-};
+    const date = ref(new Date());
+    const date2 = ref(new Date());
+    const date3 = ref(new Date());
+    const route = useRoute();
+    const station = ref({});
+    const breadcrumbs = ref(false)
 
-onMounted(() => {
-    fetchStationData();
-});
+    const fetchStationData = async () => {
+        try {
+            const response = await $fetch(`/api/v1/stations/${route.params.id}`);
+            station.value = response;
+            breadcrumbs.value = true
+        } catch (error) {
+            console.error("Error fetching station data:", error);
+        }
+    };
+
+  
+
+    const links = [{
+        label: 'หน้าแรก',
+        icon: 'i-heroicons-home',
+        to: '/'
+    }, {
+        label: 'รายการสถานี',
+        icon: 'i-heroicons-square-3-stack-3d',
+        to: '/stations'
+    }, {
+        label: station.value.name,
+    }]
 
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
-
-body {
-    background-color: #f7fafc;
-    font-family: "Kanit", sans-serif;
-}
 </style>
