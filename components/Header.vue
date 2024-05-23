@@ -1,5 +1,5 @@
 <template>
-    <div :class="fixed !== undefined ? `fixed top-0 w-full z-[1]`: ``">
+    <div :class="fixed !== undefined ? `fixed top-0 w-auto z-[1]`: ``">
         <div class="px-2 lg:px-4 flex items-center w-full mb-2">
             <div class="header flex items-center justify-between mt-5 w-full">
                 <div class="flex items-center space-x-4">
