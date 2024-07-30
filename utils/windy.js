@@ -2,7 +2,7 @@ let windyInitialized = false;
 let windyAPI = null;
 
 const zoom = 9;
-const options = {
+let initOptions = {
     // Required: API key
     key: "hsnpVb7cJX8ATE1JRWTOSvbYUi4ErDT3", // REPLACE WITH YOUR KEY !!!
 
@@ -15,32 +15,40 @@ const options = {
     zoom: zoom,
     timestamp: Date.now() + 3 * 24 * 60 * 60 * 1000,
     hourFormat: "12h",
+    verbose: true,
+    //preferCanvas: true,
 };
 
-export async function loadWindyAPI() {
+export async function loadWindyAPI(options = {}) {
+    initOptions = { ...initOptions, ...options };
     return new Promise((resolve, reject) => {
+        clearWindyOff();
 
-            clearWindyOff();
+        const scripts = [
+            "https://unpkg.com/leaflet@1.4.0/dist/leaflet.js",
+            "https://api.windy.com/assets/libBoot.js",
+        ];
 
-            const scriptLeaflet = document.createElement("script");
-            scriptLeaflet.src =
-                "https://unpkg.com/leaflet@1.4.0/dist/leaflet.js";
+        let loadedScripts = 0;
 
-            document.head.appendChild(scriptLeaflet);
-
+        scripts.forEach((src, index) => {
             const script = document.createElement("script");
-            script.src = "https://api.windy.com/assets/libBoot.js";
-            script.onload = () => initializeWindy(resolve, reject);
+            script.src = src;
+            script.onload = () => {
+                if (++loadedScripts === scripts.length) {
+                    initializeWindy(resolve, reject);
+                }
+            };
             script.onerror = () =>
-                reject(new Error("Failed to load Windy API script"));
+                reject(new Error(`Failed to load script: ${src}`));
             document.head.appendChild(script);
-        
+        });
     });
 }
 
 
 export async function initializeWindy(resolve, reject) {
-        windyInit(options, (api) => {
+        windyInit(initOptions, (api) => {
             windyAPI = api;
             windyInitialized = true;
             resolve(api);
