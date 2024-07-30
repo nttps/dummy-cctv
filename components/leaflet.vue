@@ -71,7 +71,10 @@ const initMap = async () => {
                     <p class="!m-0">ละติจูด: ${ station.latitude }</p>
                     <p class="!m-0">ลองจิจูด: ${ station.longitude }</p>
                     <p class="!m-0 !mb-2">สถานะ: ${ station.status ? 'ออนไลน์' : 'ออฟไลน์' }</p>
-                    <a class="self-center" href="stations/${station.code}" color="white">View</a>
+                    <div class="flex justify-between">
+                        <a class="self-center" href="stations/${station.code}" color="white">View</a>
+                    </div>
+                    
                 </div>
             `)
 
