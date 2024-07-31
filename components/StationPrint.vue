@@ -39,6 +39,18 @@
         }
     }
 
+    const statusLevel = (value) => {
+        switch (value) {
+            case 'DANGER':
+                return 'วิกฤต'
+            case 'WARNING':
+                return 'เฝ้าระวัง'
+            case 'NORMAL':
+                return 'ปกติ'
+        }
+    }
+
+
     $pdfMake.tableLayouts = {
         custom: {
             fillColor: function (rowIndex) {
@@ -87,7 +99,8 @@
                             [{ text: 'ละติจูด', bold: true },station.value.latitude],
                             [{ text: 'ลองจิจูด', bold: true }, station.value.longitude],
                             [{ text: 'สถานะ', bold: true },  station.value.status ? 'ออนไลน์' : 'ออฟไลน์' ],
-                            [{ text: 'ระดับน้ำ', bold: true },  cameraStatus.value.waterLevelM ]
+                            [{ text: 'ระดับน้ำ', bold: true },  cameraStatus.value.waterLevelM ],
+                            [{ text: 'ระดับการแจ้งเตือนภัย', bold: true },  statusLevel(cameraStatus.value.alertLevel) ]
                         ],
                     },
                     margin: [0, 0, 0, 20],

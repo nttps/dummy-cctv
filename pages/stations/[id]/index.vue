@@ -18,7 +18,7 @@
                 class="w-1/2"
             >
                 <div class="">
-                    <StationMap ref="mapComponent" @init="initMap" :station="station" />
+                    <StationMap ref="mapComponent" @init="initMap" :station="station" v-if="station" />
                 </div>
                 <div class="mt-10 text-black ">
                     <p><span class="text-black font-semibold  text-xl">ระดับน้ำ :</span> {{ cameraStatus.waterLevelM }}</p>
@@ -83,6 +83,7 @@
 <script setup>
     import { format } from "date-fns";
     import { io } from "socket.io-client";
+    import html2canvas from "html2canvas";
 
     onMounted(() => {
         fetchStationData();
