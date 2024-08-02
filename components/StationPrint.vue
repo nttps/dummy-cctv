@@ -124,6 +124,12 @@
                     alignment: "center",
                     margin: [0, 0, 0, 0] 
                 },
+                { 
+                    image: cameraStatus.value.image,  
+                    fit:[500, 500],
+                    alignment: "center",
+                    margin: [0, 0, 0, 30] 
+                },
                 
                
             ],

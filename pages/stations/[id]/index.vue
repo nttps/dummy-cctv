@@ -30,8 +30,16 @@
                  
             </div> 
             <div class="w-1/2 ">
-                <iframe src="https://live.server97.cloud/stream.html?src=poccam" ref="video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen frameborder="0" class="w-full h-[500px] mb-4"></iframe>
-                <img :src="previewScr" alt="">
+                <div ref="video">
+                    <!-- <VideoPlayer /> -->
+                    <VideoPlayer
+                        ref="videoPlayer"
+                        :src="config.public.videoUrl"
+                        class="mb-4"
+                        @captured="handleCapturedImage"
+                    />
+                </div>
+                <img v-if="videoSrc" :videoSrc="videoSrc">
                 <div class="flex justify-between">
                     <div>
                         <div>Play back</div>
@@ -83,11 +91,6 @@
 <script setup>
     import { format } from "date-fns";
     import { io } from "socket.io-client";
-    import html2canvas from "html2canvas";
-
-    onMounted(() => {
-        fetchStationData();
-    });
 
     const date = ref(new Date());
     const date2 = ref(new Date());
@@ -96,29 +99,13 @@
     const station = ref({});
     const breadcrumbs = ref(false)
     const printModal = ref(false)
+    const videoSrc = ref('');
+    const config = useRuntimeConfig()
 
-    const cameraStatus = ref({
-        waterLevelM: '0',
-        timestamp: format(new Date(), 'yyyy-MM-dd HH:mm'),
-        alertLevel: 'NORMAL'
+    onMounted(async () => {
+        fetchStationData();
     });
 
-    const imageMap = ref()
-    const initMap = (value) => {
-        imageMap.value = value
-    }
-
-    const video = ref()
-    const previewScr = ref('')
-
-    const openPrint = () => {
-
-        printModal.value = true
-        html2canvas(video.value).then(function(canvas) {
-            // Convert the canvas to a data URL and set it as the src of an image element
-            previewScr.value = canvas.toDataURL();
-        });
-    }
     const fetchStationData = async () => {
         try {
             const response = await $fetch(`/api/v1/stations/${route.params.id}`);
@@ -130,6 +117,35 @@
         }
     };
 
+    const cameraStatus = ref({
+        waterLevelM: '0',
+        timestamp: format(new Date(), 'yyyy-MM-dd HH:mm'),
+        alertLevel: 'NORMAL',
+        image: null
+    });
+
+    const imageMap = ref()
+    const initMap = (value) => {
+        imageMap.value = value
+    }
+
+    const video = ref()
+    const openPrint = () => {
+
+        printModal.value = true
+        captureImage();
+    }
+    const videoPlayer = ref(null);
+
+    const captureImage = () => {
+    if (videoPlayer.value) {
+        videoPlayer.value.captureImage();
+    }
+    };
+
+    const handleCapturedImage = (imageData) => {
+        cameraStatus.value.image = imageData;
+    };
 
 
     const links = [{
@@ -159,6 +175,8 @@
         socket.io.engine.on("upgrade", (rawTransport) => {
             transport.value = rawTransport.name;
         });
+
+        
     }
 
     function onDisconnect() {
@@ -183,6 +201,7 @@
             });
         }
     });
+    
 
     onBeforeUnmount(() => {
         socket.off("connect", onConnect);

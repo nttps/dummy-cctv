@@ -11,6 +11,12 @@ export default defineNuxtConfig({
         dirs: ["stores"],
     },
     nitro: {
+        publicAssets: [
+            {
+                baseURL: "/hls",
+                dir: "server/public/hls",
+            },
+        ],
         experimental: {
             websocket: true,
         },
@@ -23,5 +29,10 @@ export default defineNuxtConfig({
     },
     icon: {
         serverBundle: "remote",
+    },
+    runtimeConfig: {
+        public: {
+            videoUrl: "",
+        },
     },
 });
